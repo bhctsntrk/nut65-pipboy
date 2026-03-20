@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NUT-65 PIPBOY</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="pip-screen" id="screen">
+
+    <!-- Top bar -->
+    <header class="top-bar">
+      <span class="title" data-i18n="title">NUT-65 TERMINAL v1.0</span>
+      <span class="status" id="status">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText" data-i18n="offline">OFFLINE</span>
+      </span>
+    </header>
+
+    <!-- Tab bar -->
+    <nav class="tab-bar">
+      <button class="tab active" data-mode="snake" data-i18n="tab_snake">SNAKE</button>
+      <button class="tab" data-mode="pong" data-i18n="tab_pong">PONG</button>
+      <button class="tab" data-mode="marquee" data-i18n="tab_marquee">MARQUEE</button>
+      <div class="tab-right">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="tr">TR</button>
+        <button class="tab-btn" id="fullscreenBtn">[F11]</button>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="content">
+
+      <!-- Game stats panel -->
+      <div class="stats-panel" id="statsPanel">
+        <div class="stat">
+          <span class="stat-label" data-i18n="lbl_mode">MODE</span>
+          <span class="stat-value" id="statMode">SNAKE</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label" data-i18n="lbl_score">SCORE</span>
+          <span class="stat-value" id="statScore">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label" data-i18n="lbl_fps">FPS</span>
+          <span class="stat-value" id="statFps">--</span>
+        </div>
+      </div>
+
+      <!-- Marquee controls (hidden by default) -->
+      <div class="marquee-controls" id="marqueeControls" style="display:none">
+        <div class="input-group">
+          <label class="input-label" data-i18n="lbl_textinput">TEXT INPUT</label>
+          <input type="text" class="pip-input" id="marqueeText" value="NUT65 PIPBOY" maxlength="64" data-i18n-placeholder="ph_marquee">
+        </div>
+      </div>
+
+      <!-- Keyboard preview -->
+      <div class="keyboard-section">
+        <div class="section-label" data-i18n="lbl_hardware">HARDWARE STATUS</div>
+        <div class="keyboard-container" id="keyboardContainer">
+          <svg id="keyboardSvg" viewBox="0 0 630 260" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Bottom bar -->
+    <footer class="bottom-bar">
+      <div class="speed-control">
+        <span class="speed-label" data-i18n="lbl_speed">SPEED</span>
+        <input type="range" class="pip-slider" id="speedSlider" min="1" max="10" value="5">
+        <span class="speed-value" id="speedValue">5</span>
+      </div>
+      <div class="color-palette" id="colorPalette">
+        <span class="speed-label" data-i18n="lbl_color">COLOR</span>
+        <button class="color-btn active" data-hue="85" style="background:#00ff41" title="GREEN"></button>
+        <button class="color-btn" data-hue="128" style="background:#00ffff" title="CYAN"></button>
+        <button class="color-btn" data-hue="170" style="background:#0066ff" title="BLUE"></button>
+        <button class="color-btn" data-hue="0" style="background:#ff0000" title="RED"></button>
+        <button class="color-btn" data-hue="213" style="background:#cc00ff" title="PURPLE"></button>
+        <button class="color-btn" data-hue="32" style="background:#ffaa00" title="AMBER"></button>
+      </div>
+      <div class="bottom-right">
+        <span class="pip-text-dim" id="fpsCounter">-- FPS</span>
+      </div>
+    </footer>
+
+    <!-- CRT overlay (scanlines + vignette) -->
+    <div class="crt-overlay"></div>
+    <div class="crt-curve"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
