@@ -16,7 +16,11 @@
   <a href="#-installation">Installation</a> &bull;
   <a href="#-usage">Usage</a> &bull;
   <a href="#-architecture">Architecture</a> &bull;
-  <a href="#-tr-turkce">Turkce</a>
+  <a href="#-t%C3%BCrk%C3%A7e">Türkçe</a>
+</p>
+
+<p align="center">
+  <img src="demo.mp4" alt="NUT-65 Pip-Boy Demo" width="360">
 </p>
 
 ---
@@ -54,24 +58,21 @@ The games are fully autonomous — no player input needed. The AI plays Snake, P
 ## Installation
 
 ```bash
-# Clone
 git clone https://github.com/bhctsntrk/nut65-pipboy.git
 cd nut65-pipboy
-
-# Install dependencies (requires uv)
 uv sync
 ```
 
 ## Usage
 
 ```bash
-# Launch the GUI (main mode)
+# Launch the GUI
 uv run python -m nut65_pipboy
 
 # Keyboard-only demo (no GUI, cycles through games)
 uv run python -m nut65_pipboy --demo
 
-# Quick color test (green → red/blue → off)
+# Quick color test
 uv run python -m nut65_pipboy --smoke
 ```
 
@@ -98,9 +99,9 @@ pywebview (main thread)          Game Loop (background thread)
                                  └──────────────────┘
 ```
 
-### Key Design Decisions
+### Design Decisions
 
-- **Pull-based state** — JS polls `get_state()` via `setTimeout`, no `run_js()` push (prevents flickering)
+- **Pull-based state** — JS polls `get_state()` via `setTimeout`, avoids `run_js()` push (prevents flickering)
 - **Frame caching** — `render()` caches the frame, `state_dict()` reads the cache (prevents torn frames)
 - **Command allowlist** — Only `0x07` (SET_VALUE) is permitted over HID. `0x09` (EEPROM write) is blocked to protect firmware
 - **HID flush outside lock** — Controller lock only covers tick/render/serialize (~1ms), not USB I/O (up to 250ms on full refresh)
@@ -140,20 +141,20 @@ MIT
 
 ---
 
-<h2 id="-tr-turkce">Turkce</h2>
+<h2 id="türkçe">Türkçe</h2>
 
-Weikav NUT65 mekanik klavyenizin 82 RGB LED'ini oyun konsoluna donusturen masaustu uygulamasi.
+Weikav NUT65 mekanik klavyenizin 82 RGB LED'ini oyun konsoluna dönüştüren masaüstü uygulaması. Fallout Pip-Boy temalı CRT arayüzü üzerinden yapay zeka kontrollü oyunlar klavyenizde çalışır.
 
-### Ozellikler
+### Özellikler
 
-- **Yilan** — BFS yapay zeka ile 15x4 izgara uzerinde otonom yilan oyunu
-- **Pong** — Iki yapay zeka raket ile ping pong
-- **Kayan Yazi** — 5x5 piksel font ile ozel metin veya sistem bilgisi
-- **CRT Terminal** — Fallout Pip-Boy temali retro arayuz (tarama cizgileri, fosfor isigi)
-- **Gercek Klavye Onizleme** — NUT65 tuslarinin canli SVG gorunumu
-- **Renk Paleti** — 6 renk secenegi (Yesil, Camgobegi, Mavi, Kirmizi, Mor, Kehribar)
-- **Hiz Kontrolu** — 2 FPS'den 20 FPS'ye 10 kademeli ayar
-- **Cift Dil** — Ingilizce / Turkce
+- **Yılan** — BFS yapay zeka ile 15x4 ızgara üzerinde otonom yılan oyunu
+- **Pong** — İki yapay zeka raket ile ping pong (spin fiziği dahil)
+- **Kayan Yazı** — 5x5 piksel font ile özel metin veya sistem bilgisi (CPU, RAM, saat)
+- **CRT Terminal Arayüzü** — Tarama çizgileri, fosfor ışığı, vinyet, titreşim animasyonu
+- **Gerçek Klavye Önizleme** — NUT65 tuşlarının canlı SVG görünümü
+- **Renk Paleti** — 6 renk seçeneği (Yeşil, Camgöbeği, Mavi, Kırmızı, Mor, Kehribar)
+- **Hız Kontrolü** — 2 FPS'den 20 FPS'ye 10 kademeli ayar
+- **Çift Dil** — İngilizce / Türkçe
 
 ### Kurulum
 
@@ -163,14 +164,21 @@ cd nut65-pipboy
 uv sync
 ```
 
-### Calistirma
+### Çalıştırma
 
 ```bash
-# GUI ile baslat
+# Arayüz ile başlat
 uv run python -m nut65_pipboy
 
-# Sadece klavye demosu (GUI yok)
+# Sadece klavye demosu (arayüz yok, oyunlar arasında döner)
 uv run python -m nut65_pipboy --demo
+
+# Hızlı renk testi
+uv run python -m nut65_pipboy --smoke
 ```
 
-> **Onemli:** VIA, Vial veya SignalRGB'yi kapatmayi unutmayin — HID arabirimi ayni anda sadece bir uygulama tarafindan kullanilabilir.
+> **Önemli:** VIA, Vial veya SignalRGB'yi kapatmayı unutmayın — HID arabirimi aynı anda sadece bir uygulama tarafından kullanılabilir.
+
+### HID Güvenliği
+
+Klavye ile iletişim VIA RAW HID protokolü üzerinden yapılır. Komut izin listesi yalnızca `SET_VALUE` (0x07) komutlarına izin verir — **EEPROM yazma (0x09) kalıcı olarak engellenir**, firmware bozulması önlenir.
