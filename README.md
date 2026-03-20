@@ -20,7 +20,7 @@
 </p>
 
 <p align="center">
-  <img src="demo.mp4" alt="NUT-65 Pip-Boy Demo" width="360">
+  <img src="demo.gif" alt="NUT-65 Pip-Boy Demo" width="360">
 </p>
 
 ---
